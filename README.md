@@ -1,2 +1,4 @@
 # linux
-g++ -std=c++11 main.cc message_loop_thread.cc -lpthread -o main
+汇集平时linux编程的一些demo
+
+- [pthread](https://github.com/coomy/linux/tree/master/pthread)
