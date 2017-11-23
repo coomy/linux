@@ -16,6 +16,7 @@ MessageLoopThread::Task::~Task() {}
 int MessageLoopThread::Task::Run() {
   std::cout << "# -> a task run" << std::endl;
   fun_(param_);
+  return 0;
 }
 
 
@@ -34,6 +35,7 @@ int MessageLoopThread::Start() {
   }
 
   std::cout << "MessageLoopThread started. " << std::endl;
+  return 0;
 }
 
 int MessageLoopThread::PostTask(std::unique_ptr<Task> task) {
