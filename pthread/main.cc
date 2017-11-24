@@ -1,5 +1,5 @@
 /*
-Author: coomy
+Author: Coomy
 */
 
 #include <memory>
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
   std::cout << "Main thread before ret:" << ret << std::endl;
 
   for (int i=0; i<100; i++) {
-
+    
     thread_add->PostTask(
         make_unique<MessageLoopThread::Task>(task_fun_add, (void*)&ret));
 

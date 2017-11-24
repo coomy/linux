@@ -1,3 +1,6 @@
+/*
+Author: Coomy
+*/
 
 #include <pthread.h>
 #include <iostream>

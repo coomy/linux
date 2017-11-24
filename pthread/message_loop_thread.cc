@@ -1,3 +1,6 @@
+/*
+Author: Coomy
+*/
 
 #include "message_loop_thread.h"
 
