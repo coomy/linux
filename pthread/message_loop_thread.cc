@@ -14,7 +14,7 @@ MessageLoopThread::Task::Task(FUN_PTR fun, FUN_PRM param) :
 MessageLoopThread::Task::~Task() {}
 
 int MessageLoopThread::Task::Run() {
-  std::cout << "# -> a task run" << std::endl;
+  // std::cout << "# -> a task run" << std::endl;
   fun_(param_);
   return 0;
 }
@@ -47,6 +47,7 @@ PTHREAD MessageLoopThread::GetThread() {
   return thread_;
 }
 
+// static
 void* MessageLoopThread::MessageLoop(void *p) {
   std::cout << "# MessageLoop running, waiting for task..." << std::endl;
   MessageLoopThread *that = (MessageLoopThread*)p;
