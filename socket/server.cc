@@ -2,6 +2,8 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <unistd.h>
+
 
 #include <iostream>
 #include <string>
@@ -18,7 +20,7 @@ int main() {
 	struct sockaddr_in server_addr;
 	struct sockaddr_in client_addr;
 
-	if (server_fd = socket(AF_INET, SOCKET_STREAM, 0)) == -1 {
+	if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
     perror("socket error");
     exit(1);
   }
@@ -45,10 +47,17 @@ int main() {
                             (struct sockaddr*)&client_addr, 
                             (socklen_t*)&sin_size))) {
       perror("accept error");
-      continue;
+      // continue;
+      return 0;
     }
 
-    /////
+    printf("received a connection from %s:%u\n", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
+
+    char buffer[BUFFER_SIZE];
+    int ret = read(server_fd, buffer, BUFFER_SIZE);
+
+    cout << buffer << endl;
+
   }
 
 }
