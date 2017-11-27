@@ -2,14 +2,14 @@
 
 CXX = g++
 
-CXXFLAGS += -std=c++11 -Wall
+CXXFLAGS +=  -Wall -std=c++11
 
 TARGET = server client
 
 all: $(TARGET)
 
 %: %.cc
-	$(CXX) -c $< -o $@ $(CXXFLAGS)
+	$(CXX) $< -o $@ $(CXXFLAGS)
 
 clean:
 	rm $(TARGET)

@@ -11,10 +11,12 @@
 #define PORT 1234
 #define BUFFER_SIZE 1024
 
-using namespace std;
+using std::cout;
+using std::endl;
 
-int main() {
-	int server_fd, client_fd;
+int main()
+{
+  int server_fd, client_fd;
 	int sin_size;
 
 	struct sockaddr_in server_addr;
@@ -28,6 +30,7 @@ int main() {
   server_addr.sin_family = AF_INET;
   server_addr.sin_port = htons(PORT);
   server_addr.sin_addr.s_addr = INADDR_ANY;
+  bzero(&(server_addr.sin_zero), 8);
 
   // socket close immediately without wait [l_linger].
   // struct linger so_linger;
@@ -35,9 +38,15 @@ int main() {
   // so_linger.l_linger = 0;
   // setsockopt(server_fd, SOL_SOCKET, SO_LINGER, &so_linger, sizeof(so_linger));
 
-  bzero(&(server_addr.sin_zero), 8);
+  // 设置超时时间为 5 秒
+  struct timeval tv;
+  tv.tv_sec = 1;
+  tv.tv_usec = 0;
+  setsockopt(server_fd, SOL_SOCKET, SO_RCVTIMEO, 
+             &tv, sizeof(tv));
 
-  if (bind(server_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
+  if (bind(server_fd, (struct sockaddr*)&server_addr,
+           sizeof(server_addr)) < 0) {
     perror("bind error");
     exit(1);
   }
@@ -64,7 +73,11 @@ int main() {
            ntohs(client_addr.sin_port));
 
     char buffer[BUFFER_SIZE] = {0};
-    read(client_fd, buffer, BUFFER_SIZE);
+    int ret = read(client_fd, buffer, BUFFER_SIZE);
+    if (ret == EWOULDBLOCK) {
+      perror("read timeout for 5s.");
+      exit(1);
+    }
 
     cout << "data: " << buffer << endl << endl;
 
