@@ -6,7 +6,7 @@
 
 
 #include <iostream>
-#include <string>
+#include <string.h>
 
 #define PORT 1234
 #define BUFFER_SIZE 1024
@@ -29,6 +29,12 @@ int main() {
   server_addr.sin_port = htons(PORT);
   server_addr.sin_addr.s_addr = INADDR_ANY;
 
+  // socket close immediately without wait [l_linger].
+  // struct linger so_linger;
+  // so_linger.l_onoff = 1;
+  // so_linger.l_linger = 0;
+  // setsockopt(server_fd, SOL_SOCKET, SO_LINGER, &so_linger, sizeof(so_linger));
+
   bzero(&(server_addr.sin_zero), 8);
 
   if (bind(server_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
@@ -42,22 +48,27 @@ int main() {
   }
 
   while (true) {
+    cout << "wait connect..." << endl;
     sin_size = sizeof(struct sockaddr_in);
     if ((client_fd = accept(server_fd, 
                             (struct sockaddr*)&client_addr, 
-                            (socklen_t*)&sin_size))) {
+                            (socklen_t*)&sin_size))<0) {
       perror("accept error");
       // continue;
       return 0;
     }
 
-    printf("received a connection from %s:%u\n", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
+    cout << "wait data..." << endl;
+    printf("received a connection from %s:%u\n", 
+           inet_ntoa(client_addr.sin_addr),
+           ntohs(client_addr.sin_port));
 
-    char buffer[BUFFER_SIZE];
-    int ret = read(server_fd, buffer, BUFFER_SIZE);
+    char buffer[BUFFER_SIZE] = {0};
+    read(client_fd, buffer, BUFFER_SIZE);
 
-    cout << buffer << endl;
+    cout << "data: " << buffer << endl << endl;
 
+    close(client_fd);
   }
 
 }
