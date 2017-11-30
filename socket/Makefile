@@ -2,11 +2,14 @@
 
 CXX = g++
 
-CXXFLAGS +=  -Wall -std=c++11
+CXXFLAGS += -Wall -std=c++11
 
-TARGET = server client
+TARGET = server server_aio client
 
 all: $(TARGET)
+
+server_aio: server_aio.cc
+	$(CXX) $< -o $@ $(CXXFLAGS) -lrt
 
 %: %.cc
 	$(CXX) $< -o $@ $(CXXFLAGS)

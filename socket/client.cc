@@ -13,10 +13,10 @@
 
 using namespace std;
 
-// wait nearly 1 second;
-static void WAIT() {
+// wait nearly x second;
+static void WAIT(int seconds=0) {
   time_t old = time(NULL);
-  while (time(NULL) == old) {}
+  while (time(NULL) < old+seconds) {}
 }
 
 int main() {
@@ -46,6 +46,8 @@ int main() {
   //
   const char *hello = "hello server";
   write(client_fd, hello, strlen(hello));
+
+  WAIT();
 
   close(client_fd);
 }

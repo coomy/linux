@@ -1,6 +1,11 @@
+/**
+ * 此文件编译不通过
+ * 主要做代码记录，不做运行
+*/
+
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <sys/epoll.h> 
+#include <sys/epoll.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <unistd.h>
@@ -66,7 +71,7 @@ int main()
   struct timeval tv;
   tv.tv_sec = 1;
   tv.tv_usec = 0;
-  setsockopt(server_fd, SOL_SOCKET, SO_RCVTIMEO, 
+  setsockopt(server_fd, SOL_SOCKET, SO_RCVTIMEO,
              &tv, sizeof(tv));
 
   // bind
@@ -121,7 +126,7 @@ int main()
           client_fd = accept(server_fd,
                   (struct sockaddr *) &client_addr, &sin_size);
 
-          printf("received a connection from %s:%u\n", 
+          printf("received a connection from %s:%u\n",
                   inet_ntoa(client_addr.sin_addr),
                   ntohs(client_addr.sin_port));
 
