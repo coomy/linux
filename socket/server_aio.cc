@@ -19,12 +19,12 @@ void aio_read_complete_handler(sigval_t sigval);
 int main()
 {
   int server_fd, client_fd;
-	int sin_size;
+  int sin_size;
 
-	struct sockaddr_in server_addr;
-	struct sockaddr_in client_addr;
+  struct sockaddr_in server_addr;
+  struct sockaddr_in client_addr;
 
-	if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
+  if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
     perror("socket error");
     exit(1);
   }
@@ -38,7 +38,7 @@ int main()
   struct timeval tv;
   tv.tv_sec = 60;
   tv.tv_usec = 0;
-  setsockopt(server_fd, SOL_SOCKET, SO_RCVTIMEO, 
+  setsockopt(server_fd, SOL_SOCKET, SO_RCVTIMEO,
              &tv, sizeof(tv));
 
   if (bind(server_fd, (struct sockaddr*)&server_addr,
@@ -55,8 +55,8 @@ int main()
   while (true) {
     cout << "wait connect..." << endl;
     sin_size = sizeof(struct sockaddr_in);
-    if ((client_fd = accept(server_fd, 
-                            (struct sockaddr*)&client_addr, 
+    if ((client_fd = accept(server_fd,
+                            (struct sockaddr*)&client_addr,
                             (socklen_t*)&sin_size))<0) {
       perror("accept error");
       // continue;
@@ -64,7 +64,7 @@ int main()
     }
 
     cout << "wait data..." << endl;
-    printf("received a connection from %s:%u\n", 
+    printf("received a connection from %s:%u\n",
            inet_ntoa(client_addr.sin_addr),
            ntohs(client_addr.sin_port));
 
@@ -92,12 +92,12 @@ int main()
 
 void aio_read_complete_handler(sigval_t sigval) {
   struct aiocb *req;
- 
+
   req = (struct aiocb *)sigval.sival_ptr;
- 
+
   /* Did the request complete? */
   if (aio_error(req) == 0) {
- 
+
     if (int ret = aio_return(req) > 0) {
       char *buffer = (char*)req->aio_buf;
       cout << "ret:" << ret << " data:" << buffer << endl;
@@ -105,12 +105,12 @@ void aio_read_complete_handler(sigval_t sigval) {
       cout << "ret:" << ret << endl;
       /* read failed, consult errno */
     }
- 
+
   }
 
   close(req->aio_fildes);
   delete req;
- 
+
   return;
 }
 

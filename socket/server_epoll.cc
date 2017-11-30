@@ -46,12 +46,12 @@ bool SetSocketBlockingEnabled(int fd, bool blocking=false)
 int main()
 {
   int server_fd, client_fd;
-	int sin_size;
+  int sin_size;
 
-	struct sockaddr_in server_addr;
-	struct sockaddr_in client_addr;
+  struct sockaddr_in server_addr;
+  struct sockaddr_in client_addr;
 
-	if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
+  if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
     perror("socket error");
     exit(1);
   }
