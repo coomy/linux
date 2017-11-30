@@ -2,8 +2,14 @@
 ```Shell
 make
 ```
-### Run
+### Run simple demo
 ```Shell
 ./server
+./client
+```
+
+### Run AIO demo
+```Shell
+./server_aio
 ./client
 ```
