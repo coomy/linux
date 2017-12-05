@@ -4,7 +4,7 @@ CXX = g++
 
 CXXFLAGS += -Wall -std=c++11 -levent
 
-TARGET = timer
+TARGET = timer socket_server
 
 all: $(TARGET)
 

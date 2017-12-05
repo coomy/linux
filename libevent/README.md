@@ -12,6 +12,14 @@ make install
 ### Build the demo
 make
 
+### Run
+#### timer
+./timer
+#### socket server
+./socket_server
+#### run socket client
+../socket/client
+
 
 ### REF
 [demo1](http://hahaya.github.io/hello-in-libevent/)
