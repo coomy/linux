@@ -3,3 +3,5 @@
 
 - [pthread](https://github.com/coomy/linux/tree/master/pthread)
 - [socket](https://github.com/coomy/linux/tree/master/socket)
+- [libevent](https://github.com/coomy/linux/tree/master/libevent)
+- [openssl](https://github.com/coomy/linux/tree/master/openssl)
